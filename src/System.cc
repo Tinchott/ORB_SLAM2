@@ -281,7 +281,7 @@ cv::Mat System::TrackMonocular(const cv::Mat &im, const double &timestamp)
     mTrackingState = mpTracker->mState;
     mTrackedMapPoints = mpTracker->mCurrentFrame.mvpMapPoints;
     mTrackedKeyPointsUn = mpTracker->mCurrentFrame.mvKeysUn;
-
+    
     return Tcw;
 }
 
@@ -505,6 +505,36 @@ void System::SaveMapPoints(const string &filename) {
     cout << endl << "Map Points saved!" << endl;
 
 }
+
+
+//Test only
+void System::SaveCurrentMapPoints(const string &filename) {
+    // cout << endl << "Saving map points to " << filename << " ..." << endl;
+
+    vector<MapPoint*> vpCurrentMPs = mpMap->GetCurrentMapPoints();
+
+    // Transform all keyframes so that the first keyframe is at the origin.
+    // After a loop closure the first keyframe might not be at the origin.
+    ofstream f;
+    f.open(filename.c_str());
+    f << fixed;
+
+    for(size_t i=0; i<vpCurrentMPs.size(); i++) {
+        MapPoint* pCurrentMP = vpCurrentMPs[i];
+
+        if(pCurrentMP->isBad())
+            continue;
+
+        cv::Mat MPPositions = pCurrentMP->GetWorldPos();
+
+        f << setprecision(7) << " " << MPPositions.at<float>(0) << " " << MPPositions.at<float>(1) << " " << MPPositions.at<float>(2) << endl;
+    }
+
+    f.close();
+//    cout << endl << "Map Points saved!" << endl;
+
+}
+
 /*
 void System::SaveCloudPoints(const string &filename) {
 float x,y,z;

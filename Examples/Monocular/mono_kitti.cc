@@ -104,6 +104,10 @@ int main(int argc, char **argv)
 
         if(ttrack<T)
             usleep((T-ttrack)*1e6);
+    //Guardo la nube de puntos que se genera frame a frame en el siguiente directorio, bajo el siguiente formato:
+    std::string test_name = "/home/tincho/Escritorio/TestFrame/TestFile" + std::to_string(ni) + ".txt";
+    SLAM.SaveCurrentMapPoints(test_name);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     // Stop all threads

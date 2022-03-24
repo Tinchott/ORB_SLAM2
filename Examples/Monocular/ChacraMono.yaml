@@ -15,11 +15,19 @@
 #Camera.p1: 0.00019359
 #Camera.p2: 1.76187114e-05
 #Parámetros según el programa de la cámara ZED
+
+#Paper seba (24/03/2022)
 #Cámara izquierda
-Camera.fx: 699.585
-Camera.fy: 699.585
-Camera.cx: 659.545
-Camera.cy: 368.988
+Camera.fx: 692.964
+Camera.fy: 692.964
+Camera.cx: 576.186
+Camera.cy: 367.798
+
+#Cámara izquierda
+#Camera.fx: 699.585
+#Camera.fy: 699.585
+#Camera.cx: 659.545
+#Camera.cy: 368.988
 
 #Camera.k1: 0 #Si alimento con imagenes rectificadas, no necesito los parámetros de distorsión
 #Camera.k2: 0 #(Antes de probar el dataset con imagenes rectificadas, los valores eran k1 = -0.172019, k2 = 0.023372)
@@ -52,20 +60,20 @@ Camera.RGB: 1
 
 # ORB Extractor: Number of features per image
 #ORBextractor.nFeatures: 3000
-ORBextractor.nFeatures: 6000 #Fran uso 3000
+ORBextractor.nFeatures: 7500 #Fran uso 3000
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.4 #1.2 es lo que venía usando
 
 # ORB Extractor: Number of levels in the scale pyramid	
-ORBextractor.nLevels: 5 #con 8 anda bien
+ORBextractor.nLevels: 8 #con 8 anda bien
 
 # ORB Extractor: Fast threshold
 # Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
 # Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
 # You can lower these values if your images have low contrast			
-ORBextractor.iniThFAST: 10 #con 20 anda bien (es lo que he usado hasta el 04/07/2021-03:22)
-ORBextractor.minThFAST: 2 #con 7 anda bien (es lo que he usado hasta el 04/07/2021-03:22)
+ORBextractor.iniThFAST: 5 #con 20 anda bien (es lo que he usado hasta el 04/07/2021-03:22)
+ORBextractor.minThFAST: 1 #con 7 anda bien (es lo que he usado hasta el 04/07/2021-03:22)
 
 #--------------------------------------------------------------------------------------------
 # Viewer Parameters

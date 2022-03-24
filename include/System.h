@@ -124,6 +124,7 @@ public:
 
     //Agrego función mappoints
     void SaveMapPoints(const string &filename);
+    void SaveCurrentMapPoints(const string &filename);
 private:
 
     // Input sensor
