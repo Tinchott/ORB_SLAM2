@@ -72,11 +72,19 @@ void Viewer::Run()
     // Issue specific OpenGl we might need
     glEnable (GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+    //Cambio la siguiente línea:
+    //pangolin::CreatePanel("menu").SetBounds(0.0,1.0,0.0,pangolin::Attach::Pix(175));
+    //Por las siguiente para ver los MP en el gráfico
+    pangolin::CreatePanel("menu").SetBounds(0.0, 1.0, 0.0, pangolin::Attach::Pix(185));
+    ///////////////////////////////////////////////
 
-    pangolin::CreatePanel("menu").SetBounds(0.0,1.0,0.0,pangolin::Attach::Pix(175));
     pangolin::Var<bool> menuFollowCamera("menu.Follow Camera",true,true);
     pangolin::Var<bool> menuShowPoints("menu.Show Points",true,true);
     pangolin::Var<bool> menuShowKeyFrames("menu.Show KeyFrames",true,true);
+    //Agrego la siguiente línea para ver los MP en el gráfico
+    pangolin::Var<bool> menuShowCurrentPoints("menu.Show Current Points", true, true);
+    //////////////////////////////////////    
     pangolin::Var<bool> menuShowGraph("menu.Show Graph",true,true);
     pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode",false,true);
     pangolin::Var<bool> menuReset("menu.Reset",false,false);
@@ -138,8 +146,10 @@ void Viewer::Run()
         if(menuShowKeyFrames || menuShowGraph)
             mpMapDrawer->DrawKeyFrames(menuShowKeyFrames,menuShowGraph);
         if(menuShowPoints)
-            mpMapDrawer->DrawMapPoints();
-
+//	Cambio la siguiente línea
+//            mpMapDrawer->DrawMapPoints();
+//	Por esta, para ver los MP en el gráfico:
+	mpMapDrawer->DrawMapPoints(menuShowCurrentPoints);
         pangolin::FinishFrame();
 
         cv::Mat im = mpFrameDrawer->DrawFrame();

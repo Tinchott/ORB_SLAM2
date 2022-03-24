@@ -47,11 +47,15 @@ MapDrawer::MapDrawer(Map* pMap, const string &strSettingPath):mpMap(pMap)
     mCameraLineWidth = fSettings["Viewer.CameraLineWidth"];
 
 }
-
-void MapDrawer::DrawMapPoints()
+//Comento la siguiente línea:
+//void MapDrawer::DrawMapPoints()
+//Y la reemplazo con la siguiente para ver los MP en el gráfico:
+void MapDrawer::DrawMapPoints(const bool bDrawCurrentPoints)
 {
     const vector<MapPoint*> &vpMPs = mpMap->GetAllMapPoints();
     const vector<MapPoint*> &vpRefMPs = mpMap->GetReferenceMapPoints();
+    //Agrego la siguiente línea para ver los MP en el gráfico
+    const vector<MapPoint*> &vpCurrentMPs = mpMap->GetCurrentMapPoints();
 
     set<MapPoint*> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
 
@@ -85,6 +89,25 @@ void MapDrawer::DrawMapPoints()
     }
 
     glEnd();
+    //Agrego para ver los MP en el gráfico
+    if (bDrawCurrentPoints)
+    {
+        // Define points
+        glPointSize(5);
+        glBegin(GL_POINTS);
+        glColor3f(0.0, 1.0, 0.0);
+
+        // All map points
+        for (std::vector<MapPoint *>::const_iterator i = vpCurrentMPs.begin(); i != vpCurrentMPs.end(); i++)
+        {
+            if ((*i)->isBad())
+                continue;
+            cv::Mat pos = (*i)->GetWorldPos();
+            glVertex3f(pos.at<float>(0), pos.at<float>(1), pos.at<float>(2));
+        }
+        glEnd();
+    }
+    ///////////////////////
 }
 
 void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph)

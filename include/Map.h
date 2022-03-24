@@ -52,7 +52,12 @@ public:
     std::vector<KeyFrame*> GetAllKeyFrames();
     std::vector<MapPoint*> GetAllMapPoints();
     std::vector<MapPoint*> GetReferenceMapPoints();
-
+    //Agrego las siguientes líneas para ver los MP en el gráfico
+    // Function to manage the current points to color them in green
+    void AddCurrentMapPoint(MapPoint *pMP);        // add
+    void EraseCurrentMapPoint();                   // delete
+    std::vector<MapPoint *> GetCurrentMapPoints(); // get
+    //////////////////////////////////////////////////
     long unsigned int MapPointsInMap();
     long unsigned  KeyFramesInMap();
 
@@ -70,7 +75,9 @@ public:
 protected:
     std::set<MapPoint*> mspMapPoints;
     std::set<KeyFrame*> mspKeyFrames;
-
+    //Agrego para ver los MP en el gráfico
+    std::set<MapPoint *> mspCurrentMapPoints; // Current map points
+    //////////////////////////////////
     std::vector<MapPoint*> mvpReferenceMapPoints;
 
     long unsigned int mnMaxKFid;

@@ -120,6 +120,9 @@ long unsigned int Map::GetMaxKFid()
 
 void Map::clear()
 {
+//Agrego para ver los MP en el gráfico
+mspCurrentMapPoints.clear();
+///////////////////////////////
     for(set<MapPoint*>::iterator sit=mspMapPoints.begin(), send=mspMapPoints.end(); sit!=send; sit++)
         delete *sit;
 
@@ -132,5 +135,23 @@ void Map::clear()
     mvpReferenceMapPoints.clear();
     mvpKeyFrameOrigins.clear();
 }
+//Agrego las siguientes líneas para ver los MP en el gráfico
+void Map::AddCurrentMapPoint(MapPoint *pMP)
+{
+    unique_lock<mutex> lock(mMutexMap);
+    mspCurrentMapPoints.insert(pMP);
+}
 
+void Map::EraseCurrentMapPoint()
+{
+    unique_lock<mutex> lock(mMutexMap);
+    mspCurrentMapPoints.clear();
+}
+
+vector<MapPoint *> Map::GetCurrentMapPoints()
+{
+    unique_lock<mutex> lock(mMutexMap);
+    return vector<MapPoint *>(mspCurrentMapPoints.begin(), mspCurrentMapPoints.end());
+}
+///////////////////////////////////////////////////////
 } //namespace ORB_SLAM

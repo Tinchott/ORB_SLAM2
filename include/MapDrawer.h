@@ -37,8 +37,11 @@ public:
     MapDrawer(Map* pMap, const string &strSettingPath);
 
     Map* mpMap;
-
-    void DrawMapPoints();
+//  Cambio la siguiente línea para ver el MP en el gráfico
+//    void DrawMapPoints();
+//  Por esta otra línea:
+    void DrawMapPoints(const bool bDrawCurrentPoints);
+//////////////////////////////////////////////////////
     void DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph);
     void DrawCurrentCamera(pangolin::OpenGlMatrix &Twc);
     void SetCurrentCameraPose(const cv::Mat &Tcw);
