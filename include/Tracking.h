@@ -96,6 +96,9 @@ public:
     // Current Frame
     Frame mCurrentFrame;
     cv::Mat mImGray;
+    
+    //Agrego para ver a color
+    cv::Mat mImOriginal;
 
     // Initialization Variables (Monocular)
     std::vector<int> mvIniLastMatches;

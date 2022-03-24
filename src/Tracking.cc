@@ -241,7 +241,8 @@ cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const d
 cv::Mat Tracking::GrabImageMonocular(const cv::Mat &im, const double &timestamp)
 {
     mImGray = im;
-
+    //Agrego para ver a color
+    mImOriginal = im;
     if(mImGray.channels()==3)
     {
         if(mbRGB)

@@ -21,11 +21,11 @@ Camera.fy: 699.585
 Camera.cx: 659.545
 Camera.cy: 368.988
 
-Camera.k1: -0.172019
-Camera.k2: 0.023772
-Camera.k3: 0
-Camera.p1: 0
-Camera.p2: 0
+#Camera.k1: 0 #Si alimento con imagenes rectificadas, no necesito los parámetros de distorsión
+#Camera.k2: 0 #(Antes de probar el dataset con imagenes rectificadas, los valores eran k1 = -0.172019, k2 = 0.023372)
+#Camera.k3: 0
+#Camera.p1: 0
+#Camera.p2: 0
 
 #Cámara derecha
 #Camera.fx: 700.52
