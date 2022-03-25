@@ -102,9 +102,12 @@ void Viewer::Run()
 
     pangolin::OpenGlMatrix Twc;
     Twc.SetIdentity();
-
-    cv::namedWindow("ORB-SLAM2: Current Frame");
-
+    //Para hacer la ventana de tamaño modificable
+//	Comento esto
+//    cv::namedWindow("ORB-SLAM2: Current Frame");
+//	Agrego esto
+    cv::namedWindow("ORB-SLAM2: Current Frame", cv::WINDOW_NORMAL);
+/////////////////////////////////////////////
     bool bFollow = true;
     bool bLocalizationMode = false;
 
