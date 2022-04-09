@@ -18,7 +18,7 @@
 * along with ORB-SLAM2. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
+#include <sys/stat.h>
 #include<iostream>
 #include<algorithm>
 #include<fstream>
@@ -35,6 +35,8 @@ using namespace std;
 
 void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames,
                 vector<double> &vTimestamps);
+
+inline bool exists_test3 (const std::string& name);         
 
 int main(int argc, char **argv)
 {
@@ -107,6 +109,26 @@ int main(int argc, char **argv)
     //Guardo la nube de puntos que se genera frame a frame en el siguiente directorio, bajo el siguiente formato:
     std::string test_name = "/home/tincho/Escritorio/TestFrame/TestFile" + std::to_string(ni) + ".txt";
     SLAM.SaveCurrentMapPoints(test_name);
+    //La siguiente línea exporta la Tcw https://github.com/raulmur/ORB_SLAM2/issues/262
+    cv::Mat Tcw = SLAM.TrackMonocular(im,tframe);
+    if(!Tcw.empty()){
+	string nombreKeyFrame("/home/tincho/Escritorio/TestTrajFrame.txt");
+	ofstream file_KeyFrame;
+
+	file_KeyFrame.open(nombreKeyFrame, std::ios_base::app);
+	file_KeyFrame << setprecision(9) << Tcw.at<float>(0,0) << " " << Tcw.at<float>(0,1) << " " << Tcw.at<float>(0,2) << " " 
+	<< Tcw.at<float>(0,3) << " " << Tcw.at<float>(1,0) << " " << Tcw.at<float>(1,1) << " " << Tcw.at<float>(1,2) << " " 
+	<< Tcw.at<float>(1,3) << " " << Tcw.at<float>(2,0) << " " << Tcw.at<float>(2,1) << " " << Tcw.at<float>(2,2) << " " 
+	<< Tcw.at<float>(2,3) << " " << Tcw.at<float>(3,0) << " " << Tcw.at<float>(3,1) << " " << Tcw.at<float>(3,2) << " " 
+	<< Tcw.at<float>(3,3) << " " << ni << " " << tframe <<  std::endl;
+    }else{
+    	string nombreKeyFrame("/home/tincho/Escritorio/TestTrajFrame.txt");
+	ofstream file_KeyFrame;
+
+	file_KeyFrame.open(nombreKeyFrame, std::ios_base::app);
+	file_KeyFrame << "" << std::endl;
+	
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -137,7 +159,9 @@ int main(int argc, char **argv)
 void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilenames, vector<double> &vTimestamps)
 {
     ifstream fTimes;
+    ifstream fNames;
     string strPathTimeFile = strPathToSequence + "/times.txt";
+    string strPathImgNameFile = strPathToSequence + "/img_name.txt";
     fTimes.open(strPathTimeFile.c_str());
     while(!fTimes.eof())
     {
@@ -157,11 +181,35 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
 
     const int nTimes = vTimestamps.size();
     vstrImageFilenames.resize(nTimes);
-
-    for(int i=0; i<nTimes; i++)
-    {
-        stringstream ss;
-        ss << setfill('0') << setw(6) << i;
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
+    
+    //Me fijo si existe un archivo con los nombres de las imágenes. En dicho caso, utilizo esos nombres para cargar las imágenes del ORBSLAM
+    if( exists_test3(strPathImgNameFile) ){
+       //Dado que existe un archivo con los nombres de las imágenes, utilizo esos nombres
+       int i=0;
+       cout << "Utilizando nombres de imagenes dados en 'img_name.txt'" << endl;
+       fNames.open(strPathImgNameFile.c_str());
+       while(!fNames.eof() && i<nTimes)
+       {
+          string s;
+          getline(fNames,s);
+          if( !s.empty() ){
+             vstrImageFilenames[i] = strPrefixLeft + s;
+          }
+          i++;
+       }
     }
+    else{
+       //Dado que no existe un archivo con los nombres de las imágenes, utilizo los nombres por defecto
+       for(int i=0; i<nTimes; i++)
+       {
+           stringstream ss;
+           ss << setfill('0') << setw(6) << i;
+           vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
+       }
+    }
+}
+//Función para ver si existe un archivo (la tomo de aquí: https://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exists-using-standard-c-c11-14-17-c#:~:text=on%20this%20post.-,inline%20bool%20exist(const%20std%3A%3Astring%26%20name)%20%7B,The%20file%20was%20not%20found.)
+inline bool exists_test3 (const std::string& name) {
+  struct stat buffer;   
+  return (stat (name.c_str(), &buffer) == 0); 
 }

@@ -54,7 +54,7 @@ Camera.RGB: 1
 
 # ORB Extractor: Number of features per image
 #ORBextractor.nFeatures: 3000
-ORBextractor.nFeatures: 5000 #Fran uso 3000
+ORBextractor.nFeatures: 7500 #Fran uso 3000
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.4 #1.2 es lo que venía usando

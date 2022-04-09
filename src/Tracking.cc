@@ -581,7 +581,7 @@ void Tracking::MonocularInitialization()
     if(!mpInitializer)
     {
         // Set Reference Frame
-        if(mCurrentFrame.mvKeys.size()>500)
+        if(mCurrentFrame.mvKeys.size()>100)
         {
             mInitialFrame = Frame(mCurrentFrame);
             mLastFrame = Frame(mCurrentFrame);
@@ -602,7 +602,7 @@ void Tracking::MonocularInitialization()
     else
     {
         // Try to initialize
-        if((int)mCurrentFrame.mvKeys.size()<=500)
+        if((int)mCurrentFrame.mvKeys.size()<=100)
         {
             delete mpInitializer;
             mpInitializer = static_cast<Initializer*>(NULL);
@@ -612,10 +612,10 @@ void Tracking::MonocularInitialization()
 
         // Find correspondences
         ORBmatcher matcher(0.9,true);
-        int nmatches = matcher.SearchForInitialization(mInitialFrame,mCurrentFrame,mvbPrevMatched,mvIniMatches,500);
+        int nmatches = matcher.SearchForInitialization(mInitialFrame,mCurrentFrame,mvbPrevMatched,mvIniMatches,100);
 
         // Check if there are enough correspondences
-        if(nmatches<500)
+        if(nmatches<100)
         {
             delete mpInitializer;
             mpInitializer = static_cast<Initializer*>(NULL);

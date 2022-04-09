@@ -16,18 +16,24 @@
 #Camera.p2: 1.76187114e-05
 #Parámetros según el programa de la cámara ZED
 
-#Chacra vecino rafa (02/04/2022)
+#Paper seba (24/03/2022)
 #Cámara izquierda
-Camera.fx: 740.5725528
-Camera.fy: 676.9769192
-Camera.cx: 300.3602750
-Camera.cy: 209.6103235
+Camera.fx: 692.964
+Camera.fy: 692.964
+Camera.cx: 576.186
+Camera.cy: 367.798
 
-Camera.k1: 0.178046445
-Camera.k2: -1.722320665
-Camera.k3: 7.065731026
-Camera.p1: -0.025226042
-Camera.p2: -0.009831322
+#Cámara izquierda
+#Camera.fx: 699.585
+#Camera.fy: 699.585
+#Camera.cx: 659.545
+#Camera.cy: 368.988
+
+#Camera.k1: 0 #Si alimento con imagenes rectificadas, no necesito los parámetros de distorsión
+#Camera.k2: 0 #(Antes de probar el dataset con imagenes rectificadas, los valores eran k1 = -0.172019, k2 = 0.023372)
+#Camera.k3: 0
+#Camera.p1: 0
+#Camera.p2: 0
 
 #Cámara derecha
 #Camera.fx: 700.52
@@ -54,7 +60,7 @@ Camera.RGB: 1
 
 # ORB Extractor: Number of features per image
 #ORBextractor.nFeatures: 3000
-ORBextractor.nFeatures: 5000 #Fran uso 3000
+ORBextractor.nFeatures: 7500 #Fran uso 3000
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.4 #1.2 es lo que venía usando
